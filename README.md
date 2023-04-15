@@ -6,6 +6,12 @@
 
 - Los tipos de datos disponibles son string, integer y boolean.
 
+- Los valores para el tipo de dato *string* son (*'a'*..*'z'*)+.
+
+- Los valores para el tipo de dato *integer* son (*'0'*..*'9'*)+.
+
+- Los valores para el tipo de dato *boolean* son (*true*|*false*).
+
 - El programa debe tener una función y opcionalmente más de una.
 
 - Un programa vacio no es un programa valido.
