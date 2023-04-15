@@ -920,7 +920,7 @@ function δ(q, σ) begin
 	elseif q=="functio" and σ∈numbersSet then return "integervalue"
 	elseif q=="functio" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
 		
-	//"initial", "stringvalue", "integervalue", "if, "assign", "lessorequal" state
+	//"initial", "stringvalue", "integervalue", "if, "assign", "lessorequal", "greaterorequal", "end", "else", "then", "true", "begin", "false", "result", "string", "boolean", "integer" and "function" states
 	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='b' then return "b"
 	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='e' then return "e"
 	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='i' then return "i"
