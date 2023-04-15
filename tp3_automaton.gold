@@ -920,6 +920,8 @@ function δ(q, σ) begin
 	elseif q=="functio" and σ∈numbersSet then return "integervalue"
 	elseif q=="functio" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
 		
+	// -----------------------------
+	
 	//"initial", "stringvalue", "integervalue", "if, "assign", "lessorequal", "greaterorequal", "end", "else", "then", "true", "begin", "false", "result", "string", "boolean", "integer" and "function" states
 	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='b' then return "b"
 	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='e' then return "e"
@@ -946,13 +948,31 @@ function h(q, σ) begin
 	operatorsSet := {'+', '-', '*', '/'}
 	comparatorsSet := {'=', '<', '>'}
 	
-	if q=="stringvalue" and σ∉lettersSet then return 'A'
-	else return 'B'
+	if q=="stringvalue" and σ∉lettersSet then return λ
+	else return λ
 		
 	end
 end
 
 function g(q) begin
-	return λ
+	
+	if q=="begin" then return 'B'
+	elseif q=="end" then return 'C'
+	elseif q=="if" then return 'D'
+	elseif q=="else" then return 'E'
+	elseif q=="then" then return 'F'
+	elseif q=="assign" then return 'J'
+	elseif q=="lessorequal" then return 'P'
+	elseif q=="greaterorequal" then return 'Q'
+	elseif q=="mod" then return 'S'
+	elseif q=="function" then return 'T'
+	elseif q=="result" then return 'U'
+	elseif q=="string" then return 'V'
+	elseif q=="integer" then return 'X'
+	elseif q=="boolean" then return 'Z'
+	elseif q=="false" then return '0'
+	elseif q=="true" then return '1'
+		
+	end
 
 end
