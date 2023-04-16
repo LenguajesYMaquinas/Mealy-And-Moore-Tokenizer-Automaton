@@ -1,5 +1,13 @@
 # Mealy And Moore Tokenizer Automaton TP3
 
+- El programa debe estar separado por espacions, los elementos que no son espacios (aunque el espacio también genera el token *' '*) son los que pueden generar un token o más, se generará un token diferente a *R* si ese trozo de programa puede ser escrito en el lenguaje, así la secuencia del programa no tenga sentido. Por ejemplo, un trozo de programa valido es *a)* y uno no valido es *p;*
+
+- Se debe añadir un pedazo de programa cualquiera adicional al final del programa para evitar omitir tokens en estados que responden en las transiciones.
+
+- Es posible asignar a identificadores valores booleanos, por lo que es permitido escribir lineas del estilo: < IDENTIFICADOR > < := > < OPERADOR_COMPARACION > (< STRING > | < NUMBER >).
+
+- El automata responde con el token *< R >* a todo lo que no es posible escribir en el lenguaje.
+
 - Los parametros de la función pueden tener o no su tipo.
 
 - La función debe tener obligatoriamente su tipo de retorno.
@@ -12,8 +20,4 @@
 
 - Los valores para el tipo de dato *boolean* son (*true*|*false*).
 
-- El programa debe tener una función y opcionalmente más de una.
-
 - Un programa vacio no es un programa valido.
-
-- El automata toma solo el primer camino posible para generar un token. Por ejemplo, para la palabra *bend* el automata se toma el camino para llegar a la palabra begin, pero al no completarse la palabra, el automata responde con el token de string, aunque dentro de esa cadena se encuentre la subcadena *end*, de la cual se podría generar un token.

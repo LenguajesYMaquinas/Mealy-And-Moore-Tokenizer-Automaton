@@ -76,10 +76,22 @@ function createTransducer() : ITransducer begin
 				"tru",
 				"true",
 				"integervalue",
-				"stringvalue"
-			}	
+				"stringvalue",
+				"invalid",
+				"+",
+				"-",
+				"*", 
+				"/", 
+				" ",
+				";",
+				"=",
+				"(", 
+				")", 
+				",", 
+				";"
+			}
 		F := Q
-		Γ := ('A'‥'Z')∪{'0'}
+		Γ := ('A'‥'Z')∪('0'‥'5')∪{'+', '-', '*', '/', ' ', ';', '=', '(', ')', ',', ';'}
 		Σ := ('a'‥'z')∪('0'‥'9')∪{'=', ':', '+', '-', '/', '*', '=', '<', '>', '(', ')', ',', ';', ' '}
 		q := "initial"	
 		
@@ -90,7 +102,7 @@ function δ(q, σ) begin
 	
 	lettersSet := ('a'‥'z')
 	numbersSet := ('0'‥'9')
-	operatorsSet := {'+', '-', '*', '/'}
+	unitarySet := {'+', '-', '*', '/', ' ', ';', '=', '(', ')', ',', ';'}
 	comparatorsSet := {'=', '<', '>'}
 	
 	// -----------------------------
@@ -98,136 +110,73 @@ function δ(q, σ) begin
 	//"b" state
 	if q=="b" and σ=='e' then return "be"
 	elseif q=="b" and σ=='o' then return "bo"
-	elseif q=="b" and σ=='b' then return "b"
-	elseif q=="b" and σ=='e' then return "e"
-	elseif q=="b" and σ=='i' then return "i"
-	elseif q=="b" and σ=='t' then return "t"
-	elseif q=="b" and σ=='m' then return "m"
-	elseif q=="b" and σ=='f' then return "f"
-	elseif q=="b" and σ=='r' then return "r"
-	elseif q=="b" and σ=='s' then return "s"
 	elseif q=="b" and σ==':' then return "colon"
 	elseif q=="b" and σ=='<' then return "less"
 	elseif q=="b" and σ=='>' then return "greater"
+	elseif q=="b" and σ∈unitarySet then return σ.toString()
 	elseif q=="b" and σ∈lettersSet then return "stringvalue"
-	elseif q=="b" and σ∈numbersSet then return "integervalue"
-	elseif q=="b" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet)then return "initial"
+	elseif q=="b" and σ∈numbersSet then return "invalid"
 	//"e" state
 	elseif q=="e" and σ=='n' then return "en"
 	elseif q=="e" and σ=='l' then return "el"
-	elseif q=="e" and σ=='b' then return "b"
-	elseif q=="e" and σ=='e' then return "e"
-	elseif q=="e" and σ=='i' then return "i"
-	elseif q=="e" and σ=='t' then return "t"
-	elseif q=="e" and σ=='m' then return "m"
-	elseif q=="e" and σ=='f' then return "f"
-	elseif q=="e" and σ=='r' then return "r"
-	elseif q=="e" and σ=='s' then return "s"
 	elseif q=="e" and σ==':' then return "colon"
 	elseif q=="e" and σ=='<' then return "less"
 	elseif q=="e" and σ=='>' then return "greater"
 	elseif q=="e" and σ∈lettersSet then return "stringvalue"
 	elseif q=="e" and σ∈numbersSet then return "integervalue"
-	elseif q=="e" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="e" and (σ∈unitarySet) then return "initial"
 	//"i" state
 	elseif q=="i" and σ=='f' then return "if"
 	elseif q=="i" and σ=='n' then return "in"
-	elseif q=="i" and σ=='b' then return "b"
-	elseif q=="i" and σ=='e' then return "e"
-	elseif q=="i" and σ=='i' then return "i"
-	elseif q=="i" and σ=='t' then return "t"
-	elseif q=="i" and σ=='m' then return "m"
-	elseif q=="i" and σ=='f' then return "f"
-	elseif q=="i" and σ=='r' then return "r"
-	elseif q=="i" and σ=='s' then return "s"
 	elseif q=="i" and σ==':' then return "colon"
 	elseif q=="i" and σ=='<' then return "less"
 	elseif q=="i" and σ=='>' then return "greater"
 	elseif q=="i" and σ∈lettersSet then return "stringvalue"
 	elseif q=="i" and σ∈numbersSet then return "integervalue"
-	elseif q=="i" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="i" and (σ∈unitarySet) then return "initial"
 	//"t" state
 	elseif q=="t" and σ=='h' then return "th"
 	elseif q=="t" and σ=='r' then return "tr"
-	elseif q=="t" and σ=='b' then return "b"
-	elseif q=="t" and σ=='e' then return "e"
-	elseif q=="t" and σ=='i' then return "i"
-	elseif q=="t" and σ=='t' then return "t"
-	elseif q=="t" and σ=='m' then return "m"
-	elseif q=="t" and σ=='f' then return "f"
-	elseif q=="t" and σ=='r' then return "r"
-	elseif q=="t" and σ=='s' then return "s"
 	elseif q=="t" and σ==':' then return "colon"
 	elseif q=="t" and σ=='<' then return "less"
 	elseif q=="t" and σ=='>' then return "greater"
 	elseif q=="t" and σ∈lettersSet then return "stringvalue"
 	elseif q=="t" and σ∈numbersSet then return "integervalue"
-	elseif q=="t" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="t" and (σ∈unitarySet) then return "initial"
 	//"m" state
 	elseif q=="m" and σ=='o' then return "mo"
 	elseif q=="m" and σ=='b' then return "b"
-	elseif q=="m" and σ=='e' then return "e"
-	elseif q=="m" and σ=='i' then return "i"
-	elseif q=="m" and σ=='t' then return "t"
-	elseif q=="m" and σ=='m' then return "m"
-	elseif q=="m" and σ=='f' then return "f"
-	elseif q=="m" and σ=='r' then return "r"
-	elseif q=="m" and σ=='s' then return "s"
 	elseif q=="m" and σ==':' then return "colon"
 	elseif q=="m" and σ=='<' then return "less"
 	elseif q=="m" and σ=='>' then return "greater"
 	elseif q=="m" and σ∈lettersSet then return "stringvalue"
 	elseif q=="m" and σ∈numbersSet then return "integervalue"
-	elseif q=="m" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="m" and (σ∈unitarySet) then return "initial"
 	//"f" state
 	elseif q=="f" and σ=='u' then return "fu"
 	elseif q=="f" and σ=='a' then return "fa"
-	elseif q=="f" and σ=='b' then return "b"
-	elseif q=="f" and σ=='e' then return "e"
-	elseif q=="f" and σ=='i' then return "i"
-	elseif q=="f" and σ=='t' then return "t"
-	elseif q=="f" and σ=='m' then return "m"
-	elseif q=="f" and σ=='f' then return "f"
-	elseif q=="f" and σ=='r' then return "r"
-	elseif q=="f" and σ=='s' then return "s"
 	elseif q=="f" and σ==':' then return "colon"
 	elseif q=="f" and σ=='<' then return "less"
 	elseif q=="f" and σ=='>' then return "greater"
 	elseif q=="f" and σ∈lettersSet then return "stringvalue"
 	elseif q=="f" and σ∈numbersSet then return "integervalue"
-	elseif q=="f" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="f" and (σ∈unitarySet) then return "initial"
 	//"r" state
 	elseif q=="r" and σ=='e' then return "re"
-	elseif q=="r" and σ=='b' then return "b"
-	elseif q=="r" and σ=='e' then return "e"
-	elseif q=="r" and σ=='i' then return "i"
-	elseif q=="r" and σ=='t' then return "t"
-	elseif q=="r" and σ=='m' then return "m"
-	elseif q=="r" and σ=='f' then return "f"
-	elseif q=="r" and σ=='r' then return "r"
-	elseif q=="r" and σ=='s' then return "s"
 	elseif q=="r" and σ==':' then return "colon"
 	elseif q=="r" and σ=='<' then return "less"
 	elseif q=="r" and σ=='>' then return "greater"
 	elseif q=="r" and σ∈lettersSet then return "stringvalue"
 	elseif q=="r" and σ∈numbersSet then return "integervalue"
-	elseif q=="r" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="r" and (σ∈unitarySet) then return "initial"
 	//"s" state
 	elseif q=="s" and σ=='t' then return "st"
-	elseif q=="s" and σ=='b' then return "b"
-	elseif q=="s" and σ=='e' then return "e"
-	elseif q=="s" and σ=='i' then return "i"
-	elseif q=="s" and σ=='t' then return "t"
-	elseif q=="s" and σ=='m' then return "m"
-	elseif q=="s" and σ=='f' then return "f"
-	elseif q=="s" and σ=='r' then return "r"
-	elseif q=="s" and σ=='s' then return "s"
 	elseif q=="s" and σ==':' then return "colon"
 	elseif q=="s" and σ=='<' then return "less"
 	elseif q=="s" and σ=='>' then return "greater"
 	elseif q=="s" and σ∈lettersSet then return "stringvalue"
 	elseif q=="s" and σ∈numbersSet then return "integervalue"
-	elseif q=="s" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="s" and (σ∈unitarySet) then return "initial"
 	//"colon" state
 	elseif q=="colon" and σ=='=' then return "assign"
 	elseif q=="colon" and σ=='b' then return "b"
@@ -243,7 +192,7 @@ function δ(q, σ) begin
 	elseif q=="colon" and σ=='>' then return "greater"
 	elseif q=="colon" and σ∈lettersSet then return "stringvalue"
 	elseif q=="colon" and σ∈numbersSet then return "integervalue"
-	elseif q=="colon" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="colon" and (σ∈unitarySet) then return σ.toString()
 	//"less" state
 	elseif q=="less" and σ=='=' then return "lessorequal"
 	elseif q=="less" and σ=='b' then return "b"
@@ -259,7 +208,7 @@ function δ(q, σ) begin
 	elseif q=="less" and σ=='>' then return "greater"
 	elseif q=="less" and σ∈lettersSet then return "stringvalue"
 	elseif q=="less" and σ∈numbersSet then return "integervalue"
-	elseif q=="less" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="less" and (σ∈unitarySet) then return σ.toString()
 	//"greater" state
 	elseif q=="greater" and σ=='=' then return "greaterorequal"
 	elseif q=="greater" and σ=='b' then return "b"
@@ -275,7 +224,7 @@ function δ(q, σ) begin
 	elseif q=="greater" and σ=='>' then return "greater"
 	elseif q=="greater" and σ∈lettersSet then return "stringvalue"
 	elseif q=="greater" and σ∈numbersSet then return "integervalue"
-	elseif q=="greater" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="greater" and (σ∈unitarySet) then return σ.toString()
 		
 	// -----------------------------
 	
@@ -294,7 +243,7 @@ function δ(q, σ) begin
 	elseif q=="be" and σ=='>' then return "greater"
 	elseif q=="be" and σ∈lettersSet then return "stringvalue"
 	elseif q=="be" and σ∈numbersSet then return "integervalue"
-	elseif q=="be" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="be" and (σ∈unitarySet) then return σ.toString()
 	//"bo" state
 	elseif q=="bo" and σ=='o' then return "boo"
 	elseif q=="bo" and σ=='b' then return "b"
@@ -310,7 +259,7 @@ function δ(q, σ) begin
 	elseif q=="bo" and σ=='>' then return "greater"
 	elseif q=="bo" and σ∈lettersSet then return "stringvalue"
 	elseif q=="bo" and σ∈numbersSet then return "integervalue"
-	elseif q=="bo" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="bo" and (σ∈unitarySet) then return σ.toString()
 	//"en" state
 	elseif q=="en" and σ=='d' then return "end"
 	elseif q=="en" and σ=='b' then return "b"
@@ -326,7 +275,7 @@ function δ(q, σ) begin
 	elseif q=="en" and σ=='>' then return "greater"
 	elseif q=="en" and σ∈lettersSet then return "stringvalue"
 	elseif q=="en" and σ∈numbersSet then return "integervalue"
-	elseif q=="en" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="en" and (σ∈unitarySet) then return σ.toString()
 	//"el" state
 	elseif q=="el" and σ=='s' then return "els"
 	elseif q=="el" and σ=='b' then return "b"
@@ -342,7 +291,7 @@ function δ(q, σ) begin
 	elseif q=="el" and σ=='>' then return "greater"
 	elseif q=="el" and σ∈lettersSet then return "stringvalue"
 	elseif q=="el" and σ∈numbersSet then return "integervalue"
-	elseif q=="el" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="el" and (σ∈unitarySet) then return σ.toString()
 	//"in" state
 	elseif q=="in" and σ=='t' then return "int"
 	elseif q=="in" and σ=='b' then return "b"
@@ -358,7 +307,7 @@ function δ(q, σ) begin
 	elseif q=="in" and σ=='>' then return "greater"
 	elseif q=="in" and σ∈lettersSet then return "stringvalue"
 	elseif q=="in" and σ∈numbersSet then return "integervalue"
-	elseif q=="in" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="in" and (σ∈unitarySet) then return σ.toString()
 	//"th" state
 	elseif q=="th" and σ=='e' then return "the"
 	elseif q=="th" and σ=='b' then return "b"
@@ -374,7 +323,7 @@ function δ(q, σ) begin
 	elseif q=="th" and σ=='>' then return "greater"
 	elseif q=="th" and σ∈lettersSet then return "stringvalue"
 	elseif q=="th" and σ∈numbersSet then return "integervalue"
-	elseif q=="th" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="th" and (σ∈unitarySet) then return σ.toString()
 	//"tr" state
 	elseif q=="tr" and σ=='u' then return "tru"
 	elseif q=="tr" and σ=='b' then return "b"
@@ -390,7 +339,7 @@ function δ(q, σ) begin
 	elseif q=="tr" and σ=='>' then return "greater"
 	elseif q=="tr" and σ∈lettersSet then return "stringvalue"
 	elseif q=="tr" and σ∈numbersSet then return "integervalue"
-	elseif q=="tr" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="tr" and (σ∈unitarySet) then return σ.toString()
 	//"mo" state
 	elseif q=="mo" and σ=='d' then return "mod"
 	elseif q=="mo" and σ=='b' then return "b"
@@ -406,7 +355,7 @@ function δ(q, σ) begin
 	elseif q=="mo" and σ=='>' then return "greater"
 	elseif q=="mo" and σ∈lettersSet then return "stringvalue"
 	elseif q=="mo" and σ∈numbersSet then return "integervalue"
-	elseif q=="mo" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="mo" and (σ∈unitarySet) then return σ.toString()
 	//"fu" state
 	elseif q=="fu" and σ=='n' then return "fun"
 	elseif q=="fu" and σ=='b' then return "b"
@@ -422,7 +371,7 @@ function δ(q, σ) begin
 	elseif q=="fu" and σ=='>' then return "greater"
 	elseif q=="fu" and σ∈lettersSet then return "stringvalue"
 	elseif q=="fu" and σ∈numbersSet then return "integervalue"
-	elseif q=="fu" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="fu" and (σ∈unitarySet) then return σ.toString()
 	//"fa" state
 	elseif q=="fa" and σ=='l' then return "fal"
 	elseif q=="fa" and σ=='b' then return "b"
@@ -438,7 +387,7 @@ function δ(q, σ) begin
 	elseif q=="fa" and σ=='>' then return "greater"
 	elseif q=="fa" and σ∈lettersSet then return "stringvalue"
 	elseif q=="fa" and σ∈numbersSet then return "integervalue"
-	elseif q=="fa" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="fa" and (σ∈unitarySet) then return σ.toString()
 	//"re" state
 	elseif q=="re" and σ=='s' then return "res"
 	elseif q=="re" and σ=='b' then return "b"
@@ -454,7 +403,7 @@ function δ(q, σ) begin
 	elseif q=="re" and σ=='>' then return "greater"
 	elseif q=="re" and σ∈lettersSet then return "stringvalue"
 	elseif q=="re" and σ∈numbersSet then return "integervalue"
-	elseif q=="re" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="re" and (σ∈unitarySet) then return σ.toString()
 	//"st" state
 	elseif q=="st" and σ=='r' then return "str"
 	elseif q=="st" and σ=='b' then return "b"
@@ -470,7 +419,7 @@ function δ(q, σ) begin
 	elseif q=="st" and σ=='>' then return "greater"
 	elseif q=="st" and σ∈lettersSet then return "stringvalue"
 	elseif q=="st" and σ∈numbersSet then return "integervalue"
-	elseif q=="st" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="st" and (σ∈unitarySet) then return σ.toString()
 	
 	// -----------------------------
 	
@@ -489,7 +438,7 @@ function δ(q, σ) begin
 	elseif q=="beg" and σ=='>' then return "greater"
 	elseif q=="beg" and σ∈lettersSet then return "stringvalue"
 	elseif q=="beg" and σ∈numbersSet then return "integervalue"
-	elseif q=="beg" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="beg" and (σ∈unitarySet) then return σ.toString()
 	
 	//"boo" state
 	elseif q=="boo" and σ=='l' then return "bool"
@@ -506,7 +455,7 @@ function δ(q, σ) begin
 	elseif q=="boo" and σ=='>' then return "greater"
 	elseif q=="boo" and σ∈lettersSet then return "stringvalue"
 	elseif q=="boo" and σ∈numbersSet then return "integervalue"
-	elseif q=="boo" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="boo" and (σ∈unitarySet) then return σ.toString()
 	//"els" state
 	elseif q=="els" and σ=='e' then return "else"
 	elseif q=="els" and σ=='b' then return "b"
@@ -522,7 +471,7 @@ function δ(q, σ) begin
 	elseif q=="els" and σ=='>' then return "greater"
 	elseif q=="els" and σ∈lettersSet then return "stringvalue"
 	elseif q=="els" and σ∈numbersSet then return "integervalue"
-	elseif q=="els" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="els" and (σ∈unitarySet) then return σ.toString()
 	//"int" state
 	elseif q=="int" and σ=='e' then return "inte"
 	elseif q=="int" and σ=='b' then return "b"
@@ -538,7 +487,7 @@ function δ(q, σ) begin
 	elseif q=="int" and σ=='>' then return "greater"
 	elseif q=="int" and σ∈lettersSet then return "stringvalue"
 	elseif q=="int" and σ∈numbersSet then return "integervalue"
-	elseif q=="int" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="int" and (σ∈unitarySet) then return σ.toString()
 	//"the" state
 	elseif q=="the" and σ=='n' then return "then"
 	elseif q=="the" and σ=='b' then return "b"
@@ -554,7 +503,7 @@ function δ(q, σ) begin
 	elseif q=="the" and σ=='>' then return "greater"
 	elseif q=="the" and σ∈lettersSet then return "stringvalue"
 	elseif q=="the" and σ∈numbersSet then return "integervalue"
-	elseif q=="the" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="the" and (σ∈unitarySet) then return σ.toString()
 	//"tru" state
 	elseif q=="tru" and σ=='e' then return "true"
 	elseif q=="tru" and σ=='b' then return "b"
@@ -570,7 +519,7 @@ function δ(q, σ) begin
 	elseif q=="tru" and σ=='>' then return "greater"
 	elseif q=="tru" and σ∈lettersSet then return "stringvalue"
 	elseif q=="tru" and σ∈numbersSet then return "integervalue"
-	elseif q=="tru" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="tru" and (σ∈unitarySet) then return σ.toString()
 	//"mod" state
 	elseif q=="mod" and σ=='d' then return "mod"
 	elseif q=="mod" and σ=='b' then return "b"
@@ -586,7 +535,7 @@ function δ(q, σ) begin
 	elseif q=="mod" and σ=='>' then return "greater"
 	elseif q=="mod" and σ∈lettersSet then return "stringvalue"
 	elseif q=="mod" and σ∈numbersSet then return "integervalue"
-	elseif q=="mod" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="mod" and (σ∈unitarySet) then return σ.toString()
 	//"fun" state
 	elseif q=="fun" and σ=='c' then return "func"
 	elseif q=="fun" and σ=='b' then return "b"
@@ -602,7 +551,7 @@ function δ(q, σ) begin
 	elseif q=="fun" and σ=='>' then return "greater"
 	elseif q=="fun" and σ∈lettersSet then return "stringvalue"
 	elseif q=="fun" and σ∈numbersSet then return "integervalue"
-	elseif q=="fun" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="fun" and (σ∈unitarySet) then return σ.toString()
 	//"fal" state
 	elseif q=="fal" and σ=='s' then return "fals"
 	elseif q=="fal" and σ=='b' then return "b"
@@ -618,7 +567,7 @@ function δ(q, σ) begin
 	elseif q=="fal" and σ=='>' then return "greater"
 	elseif q=="fal" and σ∈lettersSet then return "stringvalue"
 	elseif q=="fal" and σ∈numbersSet then return "integervalue"
-	elseif q=="fal" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="fal" and (σ∈unitarySet) then return σ.toString()
 	//"res" state
 	elseif q=="res" and σ=='u' then return "resu"
 	elseif q=="res" and σ=='b' then return "b"
@@ -634,7 +583,7 @@ function δ(q, σ) begin
 	elseif q=="res" and σ=='>' then return "greater"
 	elseif q=="res" and σ∈lettersSet then return "stringvalue"
 	elseif q=="res" and σ∈numbersSet then return "integervalue"
-	elseif q=="res" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="res" and (σ∈unitarySet) then return σ.toString()
 	//"str" state
 	elseif q=="str" and σ=='i' then return "stri"
 	elseif q=="str" and σ=='b' then return "b"
@@ -650,7 +599,7 @@ function δ(q, σ) begin
 	elseif q=="str" and σ=='>' then return "greater"
 	elseif q=="str" and σ∈lettersSet then return "stringvalue"
 	elseif q=="str" and σ∈numbersSet then return "integervalue"
-	elseif q=="str" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="str" and (σ∈unitarySet) then return σ.toString()
 		
 	// -----------------------------
 	
@@ -669,7 +618,7 @@ function δ(q, σ) begin
 	elseif q=="begi" and σ=='>' then return "greater"
 	elseif q=="begi" and σ∈lettersSet then return "stringvalue"
 	elseif q=="begi" and σ∈numbersSet then return "integervalue"
-	elseif q=="begi" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="begi" and (σ∈unitarySet) then return σ.toString()
 	//"bool" state
 	elseif q=="bool" and σ=='e' then return "boole"
 	elseif q=="bool" and σ=='b' then return "b"
@@ -685,7 +634,7 @@ function δ(q, σ) begin
 	elseif q=="bool" and σ=='>' then return "greater"
 	elseif q=="bool" and σ∈lettersSet then return "stringvalue"
 	elseif q=="bool" and σ∈numbersSet then return "integervalue"
-	elseif q=="bool" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="bool" and (σ∈unitarySet) then return σ.toString()
 	//"inte" state
 	elseif q=="inte" and σ=='g' then return "integ"
 	elseif q=="inte" and σ=='b' then return "b"
@@ -701,7 +650,7 @@ function δ(q, σ) begin
 	elseif q=="inte" and σ=='>' then return "greater"
 	elseif q=="inte" and σ∈lettersSet then return "stringvalue"
 	elseif q=="inte" and σ∈numbersSet then return "integervalue"
-	elseif q=="inte" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="inte" and (σ∈unitarySet) then return σ.toString()
 	//"func" state
 	elseif q=="func" and σ=='t' then return "funct"
 	elseif q=="func" and σ=='b' then return "b"
@@ -717,7 +666,7 @@ function δ(q, σ) begin
 	elseif q=="func" and σ=='>' then return "greater"
 	elseif q=="func" and σ∈lettersSet then return "stringvalue"
 	elseif q=="func" and σ∈numbersSet then return "integervalue"
-	elseif q=="func" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="func" and (σ∈unitarySet) then return σ.toString()
 	//"fals" state
 	elseif q=="fals" and σ=='e' then return "false"
 	elseif q=="fals" and σ=='b' then return "b"
@@ -733,7 +682,7 @@ function δ(q, σ) begin
 	elseif q=="fals" and σ=='>' then return "greater"
 	elseif q=="fals" and σ∈lettersSet then return "stringvalue"
 	elseif q=="fals" and σ∈numbersSet then return "integervalue"
-	elseif q=="fals" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="fals" and (σ∈unitarySet) then return σ.toString()
 	//"resu" state
 	elseif q=="resu" and σ=='l' then return "resul"
 	elseif q=="resu" and σ=='b' then return "b"
@@ -749,7 +698,7 @@ function δ(q, σ) begin
 	elseif q=="resu" and σ=='>' then return "greater"
 	elseif q=="resu" and σ∈lettersSet then return "stringvalue"
 	elseif q=="resu" and σ∈numbersSet then return "integervalue"
-	elseif q=="resu" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="resu" and (σ∈unitarySet) then return σ.toString()
 	//"stri" state
 	elseif q=="stri" and σ=='n' then return "strin"
 	elseif q=="stri" and σ=='b' then return "b"
@@ -765,7 +714,7 @@ function δ(q, σ) begin
 	elseif q=="stri" and σ=='>' then return "greater"
 	elseif q=="stri" and σ∈lettersSet then return "stringvalue"
 	elseif q=="stri" and σ∈numbersSet then return "integervalue"
-	elseif q=="stri" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="stri" and (σ∈unitarySet) then return σ.toString()
 		
 	// -----------------------------
 	
@@ -784,7 +733,7 @@ function δ(q, σ) begin
 	elseif q=="boole" and σ=='>' then return "greater"
 	elseif q=="boole" and σ∈lettersSet then return "stringvalue"
 	elseif q=="boole" and σ∈numbersSet then return "integervalue"
-	elseif q=="boole" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="boole" and (σ∈unitarySet) then return σ.toString()
 	//"integ" state
 	elseif q=="integ" and σ=='e' then return "intege"
 	elseif q=="integ" and σ=='b' then return "b"
@@ -800,7 +749,7 @@ function δ(q, σ) begin
 	elseif q=="integ" and σ=='>' then return "greater"
 	elseif q=="integ" and σ∈lettersSet then return "stringvalue"
 	elseif q=="integ" and σ∈numbersSet then return "integervalue"
-	elseif q=="integ" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="integ" and (σ∈unitarySet) then return σ.toString()
 	//"funct" state
 	elseif q=="funct" and σ=='i' then return "functi"
 	elseif q=="funct" and σ=='b' then return "b"
@@ -816,7 +765,7 @@ function δ(q, σ) begin
 	elseif q=="funct" and σ=='>' then return "greater"
 	elseif q=="funct" and σ∈lettersSet then return "stringvalue"
 	elseif q=="funct" and σ∈numbersSet then return "integervalue"
-	elseif q=="funct" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="funct" and (σ∈unitarySet) then return σ.toString()
 	//"resul" state
 	elseif q=="resul" and σ=='t' then return "result"
 	elseif q=="resul" and σ=='b' then return "b"
@@ -832,7 +781,7 @@ function δ(q, σ) begin
 	elseif q=="resul" and σ=='>' then return "greater"
 	elseif q=="resul" and σ∈lettersSet then return "stringvalue"
 	elseif q=="resul" and σ∈numbersSet then return "integervalue"
-	elseif q=="resul" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="resul" and (σ∈unitarySet) then return σ.toString()
 	//"strin" state
 	elseif q=="strin" and σ=='g' then return "string"
 	elseif q=="strin" and σ=='b' then return "b"
@@ -848,7 +797,7 @@ function δ(q, σ) begin
 	elseif q=="strin" and σ=='>' then return "greater"
 	elseif q=="strin" and σ∈lettersSet then return "stringvalue"
 	elseif q=="strin" and σ∈numbersSet then return "integervalue"
-	elseif q=="strin" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="strin" and (σ∈unitarySet) then return σ.toString()
 		
 	// -----------------------------
 	
@@ -867,7 +816,7 @@ function δ(q, σ) begin
 	elseif q=="boolea" and σ=='>' then return "greater"
 	elseif q=="boolea" and σ∈lettersSet then return "stringvalue"
 	elseif q=="boolea" and σ∈numbersSet then return "integervalue"
-	elseif q=="boolea" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="boolea" and (σ∈unitarySet) then return σ.toString()
 	//"intege" state
 	elseif q=="intege" and σ=='r' then return "integer"
 	elseif q=="intege" and σ=='b' then return "b"
@@ -883,7 +832,7 @@ function δ(q, σ) begin
 	elseif q=="intege" and σ=='>' then return "greater"
 	elseif q=="intege" and σ∈lettersSet then return "stringvalue"
 	elseif q=="intege" and σ∈numbersSet then return "integervalue"
-	elseif q=="intege" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="intege" and (σ∈unitarySet) then return σ.toString()
 	//"functi" state
 	elseif q=="functi" and σ=='o' then return "functio"
 	elseif q=="functi" and σ=='b' then return "b"
@@ -899,7 +848,7 @@ function δ(q, σ) begin
 	elseif q=="functi" and σ=='>' then return "greater"
 	elseif q=="functi" and σ∈lettersSet then return "stringvalue"
 	elseif q=="functi" and σ∈numbersSet then return "integervalue"
-	elseif q=="functi" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="functi" and (σ∈unitarySet) then return σ.toString()
 	
 	// -----------------------------
 	
@@ -918,26 +867,51 @@ function δ(q, σ) begin
 	elseif q=="functio" and σ=='>' then return "greater"
 	elseif q=="functio" and σ∈lettersSet then return "stringvalue"
 	elseif q=="functio" and σ∈numbersSet then return "integervalue"
-	elseif q=="functio" and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif q=="functio" and (σ∈unitarySet) then return σ.toString()
 		
 	// -----------------------------
 	
 	//"initial", "stringvalue", "integervalue", "if, "assign", "lessorequal", "greaterorequal", "end", "else", "then", "true", "begin", "false", "result", "string", "boolean", "integer" and "function" states
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='b' then return "b"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='e' then return "e"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='i' then return "i"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='t' then return "t"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='m' then return "m"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='f' then return "f"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='r' then return "r"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='s' then return "s"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ==':' then return "colon"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='<' then return "less"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ=='>' then return "greater"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ∈lettersSet then return "stringvalue"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and σ∈numbersSet then return "integervalue"
-	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function") and (σ==' ' or σ==';' or σ=='=' or σ=='(' or σ==')' or  σ==',' or σ==';' or σ∈operatorsSet) then return "initial"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='b' then return "b"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='e' then return "e"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='i' then return "i"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='t' then return "t"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='m' then return "m"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='f' then return "f"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='r' then return "r"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='s' then return "s"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ==':' then return "colon"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='<' then return "less"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ=='>' then return "greater"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ∈lettersSet then return "stringvalue"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and σ∈numbersSet then return "integervalue"
+	elseif (q=="initial" or q=="stringvalue" or q=="integervalue" or q=="if" or q=="assign" or q=="lessorequal" or q=="greaterorequal" or q=="end" or q=="else" or q=="then" or q=="true" or q=="begin" or q=="false" or q=="result" or q=="string" or q=="boolean" or q=="integer" or q=="function" or q=="begin") and (σ∈unitarySet) then return σ.toString()
+	
+	// -----------------------------
+	
+	//"invalid" state
+	elseif q=="invalid" and σ==' ' then return "initial"
+	elseif q=="invalid" and σ!=' ' then return "invalid"
 		
+	// -----------------------------
+	
+	//"" states
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='b' then return "b"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='e' then return "e"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='i' then return "i"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='t' then return "t"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='m' then return "m"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='f' then return "f"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='r' then return "r"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='s' then return "s"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='<' then return "less"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ=='>' then return "greater"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ∈lettersSet then return "stringvalue"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ∈numbersSet then return "integervalue"
+	elseif (q=="+" or q=="-" or q=="*" or q=="/" or q==" " or q==";" or q=="=" or q=="(" or q==")" or q=="," or q==";") and σ∈unitarySet then return σ.toString()
+	
+	else return "invalid"
+	
 	end
 end
 
@@ -945,16 +919,36 @@ function h(q, σ) begin
 	
 	lettersSet := ('a'‥'z')
 	numbersSet := ('0'‥'9')
-	operatorsSet := {'+', '-', '*', '/'}
+	unitarySet := {'+', '-', '*', '/', ' ', ';', '=', '(', ')', ',', ';'}
 	comparatorsSet := {'=', '<', '>'}
+	operatorsSet := {'+', '-', '*', '/'}
 	
-	if q=="stringvalue" and σ∉lettersSet then return λ
+	if (q=="b" or q=="e" or q=="i" or q=="t" or q=="m" or q=="f" or q=="r" or q=="s") and (σ∈numbersSet or σ==';') then return 'R'
+	elseif (q=="b" or q=="e" or q=="i" or q=="t" or q=="m" or q=="f" or q=="r" or q=="s") and (σ=='+' or σ=='-' or σ=='*' or σ=='/' or σ==' ' or σ=='=' or σ=='(' or σ==',' or σ==':' or σ=='<' or σ=='>' or σ==')') then return 'W'
+	
+	elseif q=="colon" and (σ∈{'a', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z'} or σ==':' or σ=='<' or σ=='>') then return 'R'
+	elseif q=="colon" and (σ=='b' or σ=='i' or σ=='s') then return 'G'
+		
+	elseif q=="less" and (σ==':' or σ=='<' or σ=='>' or σ∈{'+', '-', '*', '/', ' ', ';', '(', ',', ';'}) then return 'R'
+	elseif q=="less" and (σ∈lettersSet or σ∈numbersSet) then return 'N'
+	
+	elseif q=="greater" and (σ==':' or σ=='<' or σ=='>' or σ∈{'+', '-', '*', '/', ' ', ';', '(', ',', ';'}) then return 'R'
+	elseif q=="greater" and (σ∈lettersSet or σ∈numbersSet) then return 'O'
+		
+	elseif q=="stringvalue" and (σ∈numbersSet or σ==';') then return 'R'
+	elseif q=="stringvalue" and (σ==':' or σ=='<' or σ=='>' or σ==' ' or σ=='=' or σ=='(' or σ==',' or σ∈operatorsSet or σ==')') then return 'W'
+		
+	elseif q=="integervalue" and (σ∈lettersSet or σ==':' or σ==';' or σ=='(') then return 'R'
+	elseif q=="integervalue" and (σ==')' or σ=='<' or σ=='>' or σ==' ' or σ=='=' or σ==',' or σ∈operatorsSet) then return 'Y'
+	
 	else return λ
 		
 	end
 end
 
 function g(q) begin
+	
+	unitarySet := {"+", "-", "*", "/", " ", ";", "=", "(", ")", ",", ";"}
 	
 	if q=="begin" then return 'B'
 	elseif q=="end" then return 'C'
@@ -972,6 +966,8 @@ function g(q) begin
 	elseif q=="boolean" then return 'Z'
 	elseif q=="false" then return '0'
 	elseif q=="true" then return '1'
+	elseif q∈unitarySet then return q
+	else return λ
 		
 	end
 
